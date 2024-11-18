@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Simulation" Id="{ef18954a-4466-47b6-a918-954c53eca1a6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Simulation]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{ff0200aa-5c04-4bfc-bd11-67dd767f4ccf}">
+      <Declaration><![CDATA[METHOD Execute : BOOL
+VAR_INST
+	fbButton1		: FB_ButtonSim;
+	fbButton2		: FB_ButtonSim;
+
+	bShortPress1	: BOOL;
+	bLongPress1		: BOOL;
+	bHold1			: BOOL;
+	
+	bShortPress2	: BOOL;
+	bLongPress2		: BOOL;
+	bHold2			: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbButton1(IButton := IO.FirstFloor.Kitchen.wpRoom.fbButton1, bShortPress := bShortPress1, bLongPress := bLongPress1, bHold := bHold1);
+fbButton2(IButton := IO.FirstFloor.Kitchen.wpRoom.fbButton2, bShortPress := bShortPress2, bLongPress := bLongPress2, bHold := bHold2);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

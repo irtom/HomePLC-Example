@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_LivingRoom" Id="{a602c657-f611-42ea-adbc-a3648353603c}">
+    <Declaration><![CDATA[// Zithoek B11-11L00-00
+TYPE ST_WP_LivingRoom :
+STRUCT
+	fbButton1		: FB_DigitalIn;
+	fbButton2		: FB_DigitalIn;
+	fbButton3		: FB_DigitalIn;
+	fbButton4		: FB_DigitalIn;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

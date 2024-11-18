@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="IO" Id="{0cf29516-9083-47ec-8927-3693a6fe849c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	// IO
+	FirstFloor		: ST_Floor_FirstFloor;
+	SecondFloor		: ST_Floor_SecondFloor;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

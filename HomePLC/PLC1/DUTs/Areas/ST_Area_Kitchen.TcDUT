@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Area_Kitchen" Id="{cbd3dc3a-d593-45e3-a67b-fe105a39f6ce}">
+    <Declaration><![CDATA[TYPE ST_Area_Kitchen :
+STRUCT
+	wpRoom				: ST_WP_Kitchen;
+	fbLightIsland		: FB_DigitalOut;
+	fbCenterLight		: FB_DigitalOut;
+	fbSocket			: FB_DigitalOut;
+	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Kitchen', bEnableWarning := TRUE);
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

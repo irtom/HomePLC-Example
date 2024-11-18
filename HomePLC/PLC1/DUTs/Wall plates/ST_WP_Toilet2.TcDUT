@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_Toilet2" Id="{f2a4bd0c-4c62-4df0-a690-aa7dbc89a6ea}">
+    <Declaration><![CDATA[// WC2 B1L0
+TYPE ST_WP_Toilet2 :
+STRUCT
+	fbButton1		: FB_DigitalIn;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

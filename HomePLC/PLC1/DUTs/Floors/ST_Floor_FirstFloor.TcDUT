@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Floor_FirstFloor" Id="{a100cac0-e62c-44ac-9dee-32ade59a7941}">
+    <Declaration><![CDATA[TYPE ST_Floor_FirstFloor :
+STRUCT
+	Entrance			: ST_Area_Entrance;
+	Toilet1				: ST_Area_Toilet1;
+	LivingRoom			: ST_Area_LivingRoom;
+	DiningRoom			: ST_Area_DiningRoom;
+	Kitchen				: ST_Area_Kitchen;
+	StorageRoom			: ST_Area_StorageRoom;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

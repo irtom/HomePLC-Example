@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Area_Entrance" Id="{75d5fa5c-fb69-4ec0-87c0-44b938de7de9}">
+    <Declaration><![CDATA[TYPE ST_Area_Entrance :
+STRUCT
+	wpDoor				: ST_WP_EntranceDoor;
+	fbAlarmPanel		: FB_AlarmKeypad(sKeypadName := 'Entrance');
+	wpStairs			: ST_WP_EntranceStairs;
+	fbSpotLights		: FB_DigitalOut;
+	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Entrance', bEnableWarning := TRUE);
+	fbAlarmSiren		: FB_AlarmSiren(sSirenName := 'Entrance');
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

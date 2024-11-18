@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{a6f55ad0-0d5e-4415-bd18-cbd370167f45}" SpecialFunc="None">
+    <Declaration><![CDATA[// Home PLC
+PROGRAM MAIN
+VAR
+	fbHome			: FB_MyHome;
+	fbSimulation	: FB_Simulation;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbHome.Execute();
+//fbSimulation.Execute();]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

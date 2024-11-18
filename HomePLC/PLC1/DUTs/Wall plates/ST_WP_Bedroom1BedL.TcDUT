@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_Bedroom1BedL" Id="{cb11154d-73b0-4255-8904-56237c855125}">
+    <Declaration><![CDATA[// Slaapkamer 1 bed L B11L00
+TYPE ST_WP_Bedroom1BedL :
+STRUCT
+	fbButton1		: FB_DigitalIn;
+	fbButton2		: FB_DigitalIn;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

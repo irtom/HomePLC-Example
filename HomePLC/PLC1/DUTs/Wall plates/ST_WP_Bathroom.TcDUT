@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_Bathroom" Id="{0867405c-2745-459f-94da-a26cf0f56a36}">
+    <Declaration><![CDATA[// Badkamer meubel B1L0
+TYPE ST_WP_Bathroom :
+STRUCT
+	fbKnop1		: FB_DigitalIn;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

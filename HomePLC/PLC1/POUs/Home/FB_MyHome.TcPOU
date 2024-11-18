@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_MyHome" Id="{708daf49-b68e-4e47-8817-9dbeee76db3d}" SpecialFunc="None">
+    <Declaration><![CDATA[// Home implementation
+FUNCTION_BLOCK FB_MyHome EXTENDS FB_Home
+VAR
+	// IO groups
+	fbDIGroupAllOff		: FB_DIGroup;		// Input group containing all inputs for the all-off function
+	fbDOGroupAllOff		: FB_DOGroup;		// Output group containing all outputs for the all-off function
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{bbbc78c6-7730-4726-aa31-d329be8c9d15}" />
+    <Folder Name="Private" Id="{b9411720-76ea-43fa-9036-eb48887f7e54}" />
+    <Method Name="Configure" Id="{1b0e19df-2636-4e1f-a004-4c1e3c4c0259}" FolderPath="Methods\">
+      <Declaration><![CDATA[// Configure
+METHOD PROTECTED Configure]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CreateDIGroupAllOff(IDIGroup := fbDIGroupAllOff);
+CreateDOGroupAllOff(IDOGroup := fbDOGroupAllOff);
+
+SUPER^.Configure();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ConfigureAlarm" Id="{fea6815c-44df-4883-83e0-3cbce35c8887}" FolderPath="Methods\">
+      <Declaration><![CDATA[// Configure alarm
+METHOD PROTECTED ConfigureAlarm
+VAR_INPUT
+	IAlarmManager	: I_AlarmManager;		// Alarm manager interface
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IAlarmManager.AddKeypad(IKeyPad := IO.FirstFloor.Entrance.fbAlarmPanel);
+
+IAlarmManager.AddSensor(ISensor := IO.FirstFloor.Entrance.fbAlarmSensor);
+IAlarmManager.AddSensor(ISensor := IO.FirstFloor.LivingRoom.fbAlarmSensor);
+IAlarmManager.AddSensor(ISensor := IO.FirstFloor.DiningRoom.fbAlarmsensor);
+IAlarmManager.AddSensor(ISensor := IO.FirstFloor.Kitchen.fbAlarmSensor);
+IAlarmManager.AddSensor(ISensor := IO.FirstFloor.StorageRoom.fbAlarmsensor);
+
+IAlarmManager.AddSiren(ISiren := IO.FirstFloor.Entrance.fbAlarmSiren);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ConfigureLinks" Id="{4b3e80e6-1db5-452e-b818-f637ace2f640}" FolderPath="Methods\">
+      <Declaration><![CDATA[// Add links
+METHOD PROTECTED ConfigureLinks
+VAR_INPUT
+	ILinkManager	: I_LinkManager;		// Link manager interface
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// All off
+ILinkManager.Link.InputGroup := fbDIGroupAllOff;
+ILinkManager.Link.OutputGroup := fbDOGroupAllOff;
+ILinkManager.Link.OutputReaction.OnHold := E_DOCommand.Off;
+ILinkManager.Link.ExcludeFromOverview := TRUE;
+ILinkManager.CommitLink();
+
+// First floor - entrance spot lights
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton4);
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton3);
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.Entrance.fbSpotLights);
+ILinkManager.Link.OutputGroup.AddIndicator(IO.FirstFloor.Entrance.wpDoor.fbLed4);
+ILinkManager.CommitLink();
+
+// First floor - WC1 spot light
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Toilet1.wpRoom.fbButton1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.Toilet1.fbSpotLight);
+ILinkManager.CommitLink();
+
+// First floor - Living room spot lights
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton4);
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop4);
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton2);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.LivingRoom.fbSpotLights);
+ILinkManager.CommitLink();
+
+// First floor - Dining room spot lights
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop3);
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.DiningRoom.fbSpotLights);
+ILinkManager.CommitLink();
+
+// First floor - Dining room center light
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop2);
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton2);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.DiningRoom.fbCenterLight);
+ILinkManager.CommitLink();
+
+// First floor - Kitchen island lights
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton4);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.Kitchen.fbLightIsland);
+ILinkManager.CommitLink();
+
+// First floor - Kitchen center light
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton2);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.Kitchen.fbCenterLight);
+ILinkManager.CommitLink();
+
+// First floor - Kitchen socket
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton5);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.Kitchen.fbSocket);
+ILinkManager.CommitLink();
+
+// First floor - Storage room spot lights
+ILinkManager.Link.InputGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton2);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.FirstFloor.StorageRoom.fbSpotLights);
+ILinkManager.CommitLink();
+
+// Second floor - WC2 spots
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Toilet2.wpRuimte.fbButton1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.SecondFloor.Toilet2.fbLichtSpot);
+ILinkManager.CommitLink();
+
+// Second floor - Bathroom sink lights
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bathroom.wpRoom.fbKnop1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.SecondFloor.Bathroom.fbSinkLights);
+ILinkManager.CommitLink();
+
+// Second floor - Bedroom 1 spot lights
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bedroom1.wpRoom.fbButton2);
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedL.fbButton1);
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedR.fbButton2);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSpotLights);
+ILinkManager.CommitLink();
+
+// Second floor - Bedroom 1 socket L
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedL.fbButton2);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSocketBedL);
+ILinkManager.CommitLink();
+
+// Second floor - Bedroom 1 socket R
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedR.fbButton1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSocketBedR);
+ILinkManager.CommitLink();
+
+// Second floor - Bedroom 2 spots
+ILinkManager.Link.InputGroup.AddInput(IO.SecondFloor.Bedroom2.wpRoom.fbButton1);
+ILinkManager.Link.OutputReaction.OnShortPress := E_DOCommand.Toggle;
+ILinkManager.Link.OutputGroup.AddOutput(IO.SecondFloor.Bedroom2.fbSpotLights);
+ILinkManager.CommitLink();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CreateDIGroupAll" Id="{282e6174-3f0e-47ec-a6e2-b131722515e2}" FolderPath="Methods\">
+      <Declaration><![CDATA[// Create DI group of all inputs (used to call all Execute methods)
+METHOD PROTECTED CreateDIGroupAll
+VAR_INPUT
+	IDIGroup	: I_DIGroup;		// Digital input group interface
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// First floor
+IDIGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop1);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop2);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop3);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop4);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton4);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton4);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton5);
+IDIGroup.AddInput(IO.FirstFloor.Toilet1.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton4);
+
+// Verdieping
+IDIGroup.AddInput(IO.SecondFloor.Bathroom.wpRoom.fbKnop1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedL.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedL.fbButton2);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedR.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedR.fbButton2);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom2.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Toilet2.wpRuimte.fbButton1);
+
+
+// Alarm
+// Included here so these buttons can be used for general commands as well (e.g. all off)
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton4);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton5);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton6);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CreateDIGroupAllOff" Id="{db0ae371-d6e4-4047-8aea-82141f9a533d}" FolderPath="Private\">
+      <Declaration><![CDATA[// Create DI group of all inputs that are used to turn all outputs off
+METHOD PRIVATE CreateDIGroupAllOff
+VAR_INPUT
+	IDIGroup	: I_DIGroup;		// Digital input group interface
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Gelijkvloers
+IDIGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.StorageRoom.wpRoom.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop1);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop2);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop3);
+IDIGroup.AddInput(IO.FirstFloor.DiningRoom.wpRoom.fbKnop4);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpDoor.fbButton4);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.wpStairs.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton4);
+IDIGroup.AddInput(IO.FirstFloor.Kitchen.wpRoom.fbButton5);
+IDIGroup.AddInput(IO.FirstFloor.Toilet1.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.LivingRoom.wpRoom.fbButton4);
+
+// Verdieping
+IDIGroup.AddInput(IO.SecondFloor.Bathroom.wpRoom.fbKnop1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedL.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedL.fbButton2);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedR.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpBedR.fbButton2);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom1.wpRoom.fbButton2);
+IDIGroup.AddInput(IO.SecondFloor.Bedroom2.wpRoom.fbButton1);
+IDIGroup.AddInput(IO.SecondFloor.Toilet2.wpRuimte.fbButton1);
+
+// Alarm
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton1);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton2);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton3);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton4);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton5);
+IDIGroup.AddInput(IO.FirstFloor.Entrance.fbAlarmPanel.fbButton6);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CreateDOGroupAll" Id="{2deeae85-9418-4304-a51b-d1ef2b4270a6}" FolderPath="Methods\">
+      <Declaration><![CDATA[// Create DO group of all outputs (used to call all Execute methods)
+METHOD PROTECTED CreateDOGroupAll
+VAR_INPUT
+	IDOGroup	: I_DOGroup;		// Digital output group interface
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// First floor
+IDOGroup.AddOutput(IO.FirstFloor.StorageRoom.fbSpotLights);
+IDOGroup.AddOutput(IO.FirstFloor.DiningRoom.fbSpotLights);
+IDOGroup.AddOutput(IO.FirstFloor.DiningRoom.fbCenterLight);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbSpotLights);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed1);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed2);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed3);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed4);
+IDOGroup.AddOutput(IO.FirstFloor.Kitchen.fbLightIsland);
+IDOGroup.AddOutput(IO.FirstFloor.Kitchen.fbCenterLight);
+IDOGroup.AddOutput(IO.FirstFloor.Kitchen.fbSocket);
+IDOGroup.AddOutput(IO.FirstFloor.Toilet1.fbSpotLight);
+IDOGroup.AddOutput(IO.FirstFloor.LivingRoom.fbSpotLights);
+
+// Second floor
+IDOGroup.AddOutput(IO.SecondFloor.Bathroom.fbSpotLights);
+IDOGroup.AddOutput(IO.SecondFloor.Bathroom.fbSinkLights);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSpotLights);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSocketBedL);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSocketBedR);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom2.fbSpotLights);
+IDOGroup.AddOutput(IO.SecondFloor.Toilet2.fbLichtSpot);
+
+
+// Alarm
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbLed1);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbLed2);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbLed3);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbLed4);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbLed5);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbLed6);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbBuzzer);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmSiren.fbSiren);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmSiren.fbLight);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CreateDOGroupAllOff" Id="{f9964302-ec1f-4c55-bca9-55d6714684bb}" FolderPath="Private\">
+      <Declaration><![CDATA[// Create DO group of all outputs that are turned off when all needs to be turned off
+METHOD PRIVATE CreateDOGroupAllOff
+VAR_INPUT
+	IDOGroup	: I_DOGroup;		// Digital output group interface
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// First floor
+IDOGroup.AddOutput(IO.FirstFloor.StorageRoom.fbSpotLights);
+IDOGroup.AddOutput(IO.FirstFloor.DiningRoom.fbSpotLights);
+IDOGroup.AddOutput(IO.FirstFloor.DiningRoom.fbCenterLight);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbSpotLights);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed1);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed2);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed3);
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.wpDoor.fbLed4);
+IDOGroup.AddOutput(IO.FirstFloor.Kitchen.fbLightIsland);
+IDOGroup.AddOutput(IO.FirstFloor.Kitchen.fbCenterLight);
+IDOGroup.AddOutput(IO.FirstFloor.Kitchen.fbSocket);
+IDOGroup.AddOutput(IO.FirstFloor.Toilet1.fbSpotLight);
+IDOGroup.AddOutput(IO.FirstFloor.LivingRoom.fbSpotLights);
+
+// Verdieping
+IDOGroup.AddOutput(IO.SecondFloor.Bathroom.fbSpotLights);
+IDOGroup.AddOutput(IO.SecondFloor.Bathroom.fbSinkLights);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSpotLights);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSocketBedL);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom1.fbSocketBedR);
+IDOGroup.AddOutput(IO.SecondFloor.Bedroom2.fbSpotLights);
+IDOGroup.AddOutput(IO.SecondFloor.Toilet2.fbLichtSpot);
+
+// Alarm
+IDOGroup.AddOutput(IO.FirstFloor.Entrance.fbAlarmPanel.fbBuzzer);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

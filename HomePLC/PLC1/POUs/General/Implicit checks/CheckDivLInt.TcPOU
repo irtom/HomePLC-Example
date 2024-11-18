@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CheckDivLInt" Id="{a9cad57d-3919-4d0b-8344-0857fa68d27b}" SpecialFunc="CheckDivInt64">
+    <Declaration><![CDATA[// Implicitly generated code : DO NOT EDIT
+FUNCTION CheckDivLInt : LINT
+VAR_INPUT
+	divisor:LINT;
+END_VAR
+VAR
+    sMessage   : STRING := 'CheckDivLInt: Division by zero (%d)';
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
+{noflow}
+IF divisor = 0 THEN
+	CheckDivLInt:=1;
+	// Log message
+    ADSLOGDINT(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessage,
+               dintArg     := 0);
+ELSE
+	CheckDivLInt:=divisor;
+END_IF;
+{flow}]]></ST>
+    </Implementation>
+    <LineIds Name="CheckDivLInt">
+      <LineId Id="7" Count="2" />
+      <LineId Id="17" Count="3" />
+      <LineId Id="10" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

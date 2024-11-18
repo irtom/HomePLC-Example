@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
+	<TargetInfo>
+		<TcTargetDesc>
+			<TargetType>CX9020-B000-CE</TargetType>
+			<TargetVersion>
+				<Version>3</Version>
+				<Revision>1</Revision>
+				<Build>4024</Build>
+			</TargetVersion>
+			<TargetFeatures>
+				<NetId>5.94.0.254.1.1</NetId>
+			</TargetFeatures>
+			<Hardware>
+				<Model>CX9020-B000</Model>
+				<SerialNo>000f7dlb</SerialNo>
+				<CPUVersion>3.0</CPUVersion>
+				<Date>28.6.21</Date>
+				<CPUArchitecture>5</CPUArchitecture>
+			</Hardware>
+			<OsImage>
+				<ImageDevice>CX9020</ImageDevice>
+				<ImageVersion>6.08g</ImageVersion>
+				<ImageLevel>HPS</ImageLevel>
+				<OsName>Windows CE</OsName>
+				<OsVersion>7.0</OsVersion>
+			</OsImage>
+		</TcTargetDesc>
+	</TargetInfo>
+	<LicenseInfo>
+		<SystemId Level="30" SerialNo="0110010451">{9A5987E2-0911-98AB-5713-5D50B354188A}</SystemId>
+		<PurchaseOrder><![CDATA[00629157]]></PurchaseOrder>
+		<IssueTime>2023-05-06T12:16:00</IssueTime>
+		<License>
+			<LicenseId>{66689887-CCBD-452C-AC9A-039D997C6E66}</LicenseId>
+			<Name>TC3 PLC</Name>
+			<OrderNo>TC1200</OrderNo>
+		</License>
+	</LicenseInfo>
+</TcLicenseInfo>

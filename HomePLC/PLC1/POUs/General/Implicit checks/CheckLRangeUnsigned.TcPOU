@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CheckLRangeUnsigned" Id="{31ac514d-493f-43d8-8483-4f07aacc6999}" SpecialFunc="CheckLRangeUnsigned">
+    <Declaration><![CDATA[// Implicitly generated code : DO NOT EDIT
+FUNCTION CheckLRangeUnsigned : ULINT
+VAR_INPUT
+	value, lower, upper: ULINT;
+END_VAR
+VAR
+    sMessageLow   : STRING := 'CheckLRangeUnsigned: Value too low (%d)';
+    sMessageHigh  : STRING := 'CheckLRangeUnsigned: Value too high (%d)';
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
+{noflow}
+IF (value < lower) THEN
+	CheckLRangeUnsigned := lower;
+	// Log message
+    ADSLOGLREAL(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessageLow,
+               lrealArg     := TO_REAL(value));
+ELSIF(value > upper) THEN
+	CheckLRangeUnsigned := upper;
+	// Log message
+    ADSLOGLREAL(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessageHigh,
+               lrealArg     := TO_REAL(value));
+ELSE
+	CheckLRangeUnsigned := value;
+END_IF
+{flow}]]></ST>
+    </Implementation>
+    <LineIds Name="CheckLRangeUnsigned">
+      <LineId Id="7" Count="2" />
+      <LineId Id="20" Count="3" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="24" Count="3" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

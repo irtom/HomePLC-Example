@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Area_LivingRoom" Id="{bcce62e4-38c5-4e7f-b47d-2e36855ccb7e}">
+    <Declaration><![CDATA[TYPE ST_Area_LivingRoom :
+STRUCT
+	wpRoom			: ST_WP_LivingRoom;
+	fbSpotLights	: FB_DigitalOut;
+	fbAlarmSensor	: FB_AlarmSensor(sSensorName := 'LivingRoom', bEnableWarning := FALSE);
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CheckBounds" Id="{5c5c9cee-6223-4480-849c-43da068edc91}" SpecialFunc="CheckBounds">
+    <Declaration><![CDATA[// Implicitly generated code : DO NOT EDIT
+FUNCTION CheckBounds : DINT
+VAR_INPUT
+	index, lower, upper: DINT;
+END_VAR
+// User defined local variables
+VAR
+    sMessageLow   : STRING := 'CheckBounds: Index too low (%d)';
+    sMessageHigh  : STRING := 'CheckBounds: Index too high (%d)';
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// This function is called every time an array is indexed
+// See https://infosys.beckhoff.com/english.php?content=../content/1033/tc3_plc_intro/2530356875.html&id=
+
+{noflow}
+// Index too low
+IF index < lower THEN
+    CheckBounds := lower;
+    // Log message
+    ADSLOGDINT(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessageLow,
+               dintArg     := index);
+
+// Index too high
+ELSIF index > upper THEN
+    CheckBounds := upper;
+    // Log message
+    ADSLOGDINT(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessageHigh,
+               dintArg     := index);
+
+// Index OK
+ELSE 
+    CheckBounds := index;
+END_IF
+{flow}]]></ST>
+    </Implementation>
+    <LineIds Name="CheckBounds">
+      <LineId Id="21" Count="6" />
+      <LineId Id="29" Count="7" />
+      <LineId Id="38" Count="8" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

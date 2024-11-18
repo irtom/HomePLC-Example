@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Area_Toilet2" Id="{11672fd5-f674-4377-877a-0dabf8f8b528}">
+    <Declaration><![CDATA[TYPE ST_Area_Toilet2 :
+STRUCT
+	wpRuimte			: ST_WP_Toilet2;		// WC2 B1L0
+	fbLichtSpot			: FB_DigitalOut;	// Licht spot + nis spot
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

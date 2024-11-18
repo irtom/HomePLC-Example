@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_Kitchen" Id="{b0e19f13-dae3-48c3-8556-79cd734edd2a}">
+    <Declaration><![CDATA[// Keuken B1-11-11L0-00-00
+TYPE ST_WP_Kitchen :
+STRUCT
+	fbButton1		: FB_DigitalIn;
+	fbButton2		: FB_DigitalIn;
+	fbButton3		: FB_DigitalIn;
+	fbButton4		: FB_DigitalIn;
+	fbButton5		: FB_DigitalIn;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

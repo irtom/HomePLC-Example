@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_EntranceStairs" Id="{1a1ea3f8-7a56-41c3-8ca0-0c3079324c3c}">
+    <Declaration><![CDATA[// Inkom trap B1-11L0-00
+TYPE ST_WP_EntranceStairs :
+STRUCT
+	fbButton1		: FB_DigitalIn;
+	fbButton2		: FB_DigitalIn;
+	fbButton3		: FB_DigitalIn;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

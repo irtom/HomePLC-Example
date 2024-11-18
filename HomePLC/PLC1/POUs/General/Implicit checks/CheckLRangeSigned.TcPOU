@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="CheckLRangeSigned" Id="{c3d26626-36aa-401e-998e-9202de1182f8}" SpecialFunc="CheckLRangeSigned">
+    <Declaration><![CDATA[// Implicitly generated code : DO NOT EDIT
+FUNCTION CheckLRangeSigned : LINT
+VAR_INPUT
+	value, lower, upper: LINT;
+END_VAR
+VAR
+    sMessageLow   : STRING := 'CheckLRangeSigned: Value too low (%d)';
+    sMessageHigh  : STRING := 'CheckLRangeSigned: Value too high (%d)';
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
+{noflow}
+IF (value < lower) THEN
+	CheckLRangeSigned := lower;
+	// Log message
+    ADSLOGLREAL(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessageLow,
+               lrealArg     := TO_REAL(value));
+ELSIF(value > upper) THEN
+	CheckLRangeSigned := upper;
+	// Log message
+    ADSLOGLREAL(msgCtrlMask := ADSLOG_MSGTYPE_WARN,
+               msgFmtStr   := sMessageHigh,
+               lrealArg     := TO_REAL(value));
+ELSE
+	CheckLRangeSigned := value;
+END_IF
+
+{flow}]]></ST>
+    </Implementation>
+    <LineIds Name="CheckLRangeSigned">
+      <LineId Id="7" Count="3" />
+      <LineId Id="22" Count="2" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="26" Count="2" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="13" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

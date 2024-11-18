@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_WP_EntranceDoor" Id="{c038815e-79c0-41ae-8aa1-5cbf4b6e775b}">
+    <Declaration><![CDATA[// Inkom deur - B11-11L11-11
+TYPE ST_WP_EntranceDoor :
+STRUCT
+	fbButton1		: FB_DigitalIn;
+	fbLed1			: FB_DigitalOut;
+	fbButton2		: FB_DigitalIn;
+	fbLed2			: FB_DigitalOut;
+	fbButton3		: FB_DigitalIn;
+	fbLed3			: FB_DigitalOut;
+	fbButton4		: FB_DigitalIn;
+	fbLed4			: FB_DigitalOut;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>
