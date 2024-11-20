@@ -7,8 +7,8 @@ STRUCT
 	fbAlarmPanel		: FB_AlarmKeypad(sKeypadName := 'Entrance');
 	wpStairs			: ST_WP_EntranceStairs;
 	fbSpotLights		: FB_DigitalOut;
-	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Entrance', bEnableWarning := TRUE);
-	fbAlarmSiren		: FB_AlarmSiren(sSirenName := 'Entrance');
+	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Entrance', nSensorID := 2, bEnableWarning := TRUE);
+	fbAlarmSiren		: FB_AlarmSiren(sSirenName := 'Entrance', nSirenID := 1);
 END_STRUCT
 END_TYPE]]></Declaration>
   </DUT>

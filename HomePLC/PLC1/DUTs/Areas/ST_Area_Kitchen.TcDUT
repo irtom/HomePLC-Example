@@ -7,7 +7,7 @@ STRUCT
 	fbLightIsland		: FB_DigitalOut;
 	fbCenterLight		: FB_DigitalOut;
 	fbSocket			: FB_DigitalOut;
-	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Kitchen', bEnableWarning := TRUE);
+	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Kitchen', nSensorID := 5, bEnableWarning := TRUE);
 END_STRUCT
 END_TYPE]]></Declaration>
   </DUT>

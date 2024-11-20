@@ -5,7 +5,7 @@
 STRUCT
 	wpRoom			: ST_WP_LivingRoom;
 	fbSpotLights	: FB_DigitalOut;
-	fbAlarmSensor	: FB_AlarmSensor(sSensorName := 'LivingRoom', bEnableWarning := FALSE);
+	fbAlarmSensor	: FB_AlarmSensor(sSensorName := 'LivingRoom', nSensorID := 3, bEnableWarning := FALSE);
 END_STRUCT
 END_TYPE]]></Declaration>
   </DUT>
