@@ -4,6 +4,8 @@ Example to demonstrate the use of all HomePLC libraries.
 
 ## Dependencies
 
+Download and install the latest releases of the following libraries before opening this solution:
+
 - [HomePLC AlarmManager](https://github.com/irtom/HomePLC-AlarmManager)
 - [HomePLC DIO](https://github.com/irtom/HomePLC-DIO)
 - [HomePLC Home](https://github.com/irtom/HomePLC-Home)
