@@ -52,7 +52,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{C28C7899-854E-477E-9A9F-1C4AB19BF262}" Name="PLC1" PrjFilePath="PLC1\PLC1.plcproj" TmcFilePath="PLC1\PLC1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC1\PLC1.tmc" TmcHash="{956E4B61-B756-07DF-FEDD-33A0C18BF082}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC1\PLC1.tmc" TmcHash="{6D752583-E631-F104-B6C9-F6868F5536DC}">
 					<Name>PLC1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -310,6 +310,11 @@
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.fbHome.fbAlarmManager.bEnabled</Name>
+							<Comment><![CDATA[ Alarm enabled]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
 						<Var>
 							<Name>MAIN.fbHome.fbAlarmManager.nState</Name>
 							<Comment><![CDATA[ Alarm state number]]></Comment>
