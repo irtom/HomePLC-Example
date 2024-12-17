@@ -4,7 +4,7 @@
     <Declaration><![CDATA[TYPE ST_Area_Entrance :
 STRUCT
 	wpDoor				: ST_WP_EntranceDoor;
-	fbAlarmPanel		: FB_AlarmKeypad(sKeypadName := 'Entrance');
+	fbAlarmPanel		: FB_AlarmKeypad(sKeypadName := 'Entrance', bSoundBuzzer := TRUE);
 	wpStairs			: ST_WP_EntranceStairs;
 	fbSpotLights		: FB_DigitalOut;
 	fbAlarmSensor		: FB_AlarmSensor(sSensorName := 'Entrance', nSensorID := 2, bEnableWarning := TRUE);
